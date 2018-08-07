@@ -3,15 +3,17 @@ package library;
 public class Item {
     private final String author;
     private final String title;
-    private final int id;
     private final String subject;
     
     private int stock;
     
-    public Item(String author, String title, int id, String subject) {
+    public Item(String author, String title, String subject) {
+        if (author == null) {
+            throw new IllegalArgumentException("Author can't be null.");
+        }
+        
         this.author = author;
         this.title = title;
-        this.id = id;
         this.subject = subject;
     }
     
@@ -21,10 +23,6 @@ public class Item {
     
     public String getTitle() {
         return this.title;
-    }
-    
-    public int getId() {
-        return this.id;
     }
     
     public int getStock() {
@@ -37,7 +35,7 @@ public class Item {
     
     public void setStock(int stock) {
         if (stock < 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Stock must be non-negative.");
         }
         
         this.stock = stock;
