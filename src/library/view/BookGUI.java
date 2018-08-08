@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package library;
+package library.view;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
+import library.Item;
 
 /**
  *
@@ -54,7 +55,7 @@ public class BookGUI extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastrar Livro", 0, 0, new java.awt.Font("Tahoma", 0, 36))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastrar Livro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 36))); // NOI18N
         jPanel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
 
         titleTextfield.setText("Título");
