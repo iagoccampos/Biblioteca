@@ -1,0 +1,6 @@
+-------- Introdução --------
+    A empresa possui uma linha de software voltado para o gerenciamento de bibliotecas. Com este software é possível ter um controle mais robusto de todo o ambiente. 
+    O escopo inicial do projeto permitirá que os funcionários da biblioteca possam cadastrar livros, além de fazer controle sobre as informações de cada livro e de estoque. Os alunos conseguirão visualizar os livros pendentes em seu nome, assim como a data de vencimento e renová-los. Também será possível listar os livros por assunto, título e/ou por autor ou pesquisar por obras individualmente.
+
+-------- Descrição --------
+    A aplicação será desenvolvida para _desktop_ e terá acesso a um banco de dados _MySQL_ para controle dos livros, tal como autor, assunto, estoque &c. Este banco de dados será controlado através de uma interface gráfica desenvolvida em Java acessível através de um login destinado aos funcionários. Todos os alunos também terão um cadastro, pelo qual será possível visualizar os livros pendentes, solicitar livros do acervo, fazer pesquisas e renovações.
