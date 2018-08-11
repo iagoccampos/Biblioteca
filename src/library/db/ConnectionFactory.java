@@ -13,11 +13,12 @@ import java.sql.SQLException;
  *
  * @author iago.campos
  */
-public abstract class ConnectionFactory {
-    
+public abstract class ConnectionFactory
+{
+    private static final String url = "jdbc:mysql://localhost:3306/library?useTimezone=true&serverTimezone=UTC";
+
     public static Connection getConnection() throws SQLException
     {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/library",
-                "root", "pass123");
+        return DriverManager.getConnection(url.toString(), "root", "pass123");
     }
 }

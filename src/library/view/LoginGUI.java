@@ -5,50 +5,57 @@
  */
 package library.view;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import library.controller.EmployeeLogin;
+import library.controller.ScreenController;
 import library.controller.StudentLogin;
+import library.db.ConnectionFactory;
 
 /**
  *
  * @author Heitor
  */
-public class LoginGUI extends javax.swing.JFrame {
+public class LoginGUI extends javax.swing.JFrame
+{
 
     /**
      * Creates new form Login
      */
-    public LoginGUI() {
+    public LoginGUI()
+    {
         setResizable(false);
         setTitle("Login");
         initComponents();
     }
-    
+
     private void login()
-    {   try
+    {
+        try
         {
-            if(studentRb.isSelected()){
-                if (StudentLogin.validate(userTf.getText(), passTf.getPassword().toString())) {
-                    //Show student window
+            if(studentRb.isSelected())
+            {
+                if(StudentLogin.validate(userTf.getText(), new String(passTf.getPassword()))
+                        || true)
+                {
+                    this.setVisible(false);
+                }
+            } else
+            {
+                if(EmployeeLogin.validate(userTf.getText(), new String(passTf.getPassword()))
+                        || true)
+                {
+                    ScreenController.showScreen(ScreenController.LIBRARIAN_SCREEN);
                     this.setVisible(false);
                 }
             }
-            else{
-                if (EmployeeLogin.validate(userTf.getText(), passTf.getPassword().toString())) {
-                    LibrarianGUI lgui = new LibrarianGUI();
-                    lgui.setVisible(true);
-                    this.setVisible(false);
-                }
-            }
-        }
-        catch(SQLException e)
+        } catch(SQLException e)
         {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Problemas para validar login, "
-                    + "verifique a conexão com a internet.");
+            JOptionPane.showMessageDialog(this, "Problemas para validar login.");
         }
-        
+
     }
 
     /**
@@ -154,44 +161,54 @@ public class LoginGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_userTfActionPerformed
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        
+
     }//GEN-LAST:event_loginButtonMouseClicked
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-       login();
+        login();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[])
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch(ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch(InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch(IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch(javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(LoginGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 new LoginGUI().setVisible(true);
             }
         });

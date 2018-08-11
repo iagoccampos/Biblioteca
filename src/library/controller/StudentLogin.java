@@ -7,25 +7,33 @@ package library.controller;
 
 import library.db.ConnectionFactory;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import java.sql.Statement;
 
 /**
  *
  * @author iago.campos
  */
-public abstract class StudentLogin {
-
-    public static boolean validate(String acc, String pass) throws SQLException {
-
+public abstract class StudentLogin
+{
+    public static boolean validate(String acc, String pass) throws SQLException
+    {
         Connection connection = ConnectionFactory.getConnection();
-        PreparedStatement statement = connection.prepareStatement("select * from students");
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery("SELECT password=" + pass
+                + " AS result FROM students WHERE registration=" + acc);
+
+        if(result.next() && result.getInt("result") == 1)
+        {
+            connection.close();
+            return true;
+        }
+
+        result.close();
+        statement.close();
         connection.close();
 
         return true;
     }
-
 }
