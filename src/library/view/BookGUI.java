@@ -46,7 +46,7 @@ public class BookGUI extends javax.swing.JFrame {
         cleanButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro de livros");
 
         registerButton.setText("Cadastrar");
         registerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -59,10 +59,25 @@ public class BookGUI extends javax.swing.JFrame {
         jPanel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
 
         titleTextfield.setText("Título");
+        titleTextfield.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                titleTextfieldMouseClicked(evt);
+            }
+        });
 
         authorTextfield.setText("Autor");
+        authorTextfield.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                authorTextfieldMouseClicked(evt);
+            }
+        });
 
         stockTextfield.setText("Estoque");
+        stockTextfield.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stockTextfieldMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Título");
 
@@ -71,6 +86,11 @@ public class BookGUI extends javax.swing.JFrame {
         jLabel4.setText("Estoque");
 
         subjectTextfield.setText("Assunto");
+        subjectTextfield.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                subjectTextfieldMouseClicked(evt);
+            }
+        });
 
         jLabel5.setText("Assunto");
 
@@ -183,34 +203,57 @@ public class BookGUI extends javax.swing.JFrame {
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         String author = this.authorTextfield.getText();
-        if (author.isEmpty()) {
-            
-        }
-        
+        String title = this.titleTextfield.getText();
+        String subject = this.subjectTextfield.getText();  
+		
         Date date = new Date();
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         String dateString = calendar.getTime().toString();
-        System.out.println(dateString);
+        //System.out.println(dateString);
         
         int stock;
         try {
             stock = Integer.parseInt(this.stockTextfield.getText());
         } catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(rootPane, "O estoque deve conter um número");
             return;
         }
         
-        String title = this.titleTextfield.getText();
-        
-        String subject = this.subjectTextfield.getText();
-        
-        Item item = new Item(author, title, subject);
-        item.setStock(stock);
+		//data critic
+        if(author.equals("Autor") || title.equals("Título")|| subject.equals("Assunto") 
+				|| author.endsWith("") || title.equals("")|| subject.equals(""))
+			JOptionPane.showMessageDialog(rootPane, "Campos inválidos!");
+		else{
+			Item item = new Item(author, title, subject);
+			item.setStock(stock);
+			JOptionPane.showMessageDialog(rootPane, "Livro cadastrado!");
+		}
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void titleTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleTextfieldMouseClicked
+        // TODO add your handling code here:
+		titleTextfield.setText("");
+    }//GEN-LAST:event_titleTextfieldMouseClicked
+
+    private void authorTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_authorTextfieldMouseClicked
+        // TODO add your handling code here:
+		authorTextfield.setText("");
+    }//GEN-LAST:event_authorTextfieldMouseClicked
+
+    private void subjectTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subjectTextfieldMouseClicked
+        // TODO add your handling code here:
+		subjectTextfield.setText("");
+    }//GEN-LAST:event_subjectTextfieldMouseClicked
+
+    private void stockTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stockTextfieldMouseClicked
+        // TODO add your handling code here:
+		stockTextfield.setText("");
+    }//GEN-LAST:event_stockTextfieldMouseClicked
 
     /**
      * @param args the command line arguments

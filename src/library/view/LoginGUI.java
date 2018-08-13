@@ -43,12 +43,12 @@ public class LoginGUI extends javax.swing.JFrame
                 }
             } else
             {
-                if(EmployeeLogin.validate(userTf.getText(), new String(passTf.getPassword()))
-                        || true)
-                {
+               // if(EmployeeLogin.validate(userTf.getText(), new String(passTf.getPassword()))
+                //        || true)
+                //{
                     ScreenController.showScreen(ScreenController.LIBRARIAN_SCREEN);
                     this.setVisible(false);
-                }
+                //}
             }
         } catch(SQLException e)
         {
