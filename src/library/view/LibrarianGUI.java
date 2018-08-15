@@ -5,6 +5,8 @@
  */
 package library.view;
 
+import library.controller.ScreenController;
+
 /**
  *
  * @author Heitor
@@ -15,7 +17,7 @@ public class LibrarianGUI extends javax.swing.JFrame {
      * Creates new form LibrarianGUI
      */
     public LibrarianGUI() {
-        initComponents();
+	initComponents();
     }
 
     /**
@@ -44,7 +46,7 @@ public class LibrarianGUI extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("Dependências");
+        jToggleButton1.setText("Pendências");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
@@ -58,7 +60,7 @@ public class LibrarianGUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(registerButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, Short.MAX_VALUE)
                 .addComponent(jToggleButton1)
                 .addGap(130, 130, 130))
         );
@@ -106,54 +108,53 @@ public class LibrarianGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        BookGUI book = new BookGUI();
-        book.setVisible(true);
+	BookGUI book = new BookGUI();
+	book.setVisible(true);
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        this.setVisible(false);
-		LoginGUI login = new LoginGUI();
-		login.setVisible(true);
+	this.setVisible(false);
+	LoginGUI login = new LoginGUI();
+	login.setVisible(true);
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        DependenciesGUI dependencies = new DependenciesGUI();
-		dependencies.setVisible(true);
+	ScreenController.showScreen(ScreenController.PENDENCIES_SCREEN);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LibrarianGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LibrarianGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LibrarianGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LibrarianGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+	/* Set the Nimbus look and feel */
+	//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+	/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+	 */
+	try {
+	    for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+		if("Nimbus".equals(info.getName())) {
+		    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+		    break;
+		}
+	    }
+	} catch(ClassNotFoundException ex) {
+	    java.util.logging.Logger.getLogger(LibrarianGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	} catch(InstantiationException ex) {
+	    java.util.logging.Logger.getLogger(LibrarianGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	} catch(IllegalAccessException ex) {
+	    java.util.logging.Logger.getLogger(LibrarianGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	} catch(javax.swing.UnsupportedLookAndFeelException ex) {
+	    java.util.logging.Logger.getLogger(LibrarianGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	}
+	//</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LibrarianGUI().setVisible(true);
-            }
-        });
+	/* Create and display the form */
+	java.awt.EventQueue.invokeLater(new Runnable() {
+	    public void run() {
+		new LibrarianGUI().setVisible(true);
+	    }
+	});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
