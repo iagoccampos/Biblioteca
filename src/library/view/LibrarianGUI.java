@@ -17,7 +17,8 @@ public class LibrarianGUI extends javax.swing.JFrame {
      * Creates new form LibrarianGUI
      */
     public LibrarianGUI() {
-	initComponents();
+		initComponents();
+		this.setTitle("Gerenciador");
     }
 
     /**
@@ -31,7 +32,8 @@ public class LibrarianGUI extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         registerButton = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        depedenciesButton = new javax.swing.JToggleButton();
+        listButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,10 +48,17 @@ public class LibrarianGUI extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("Pendências");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        depedenciesButton.setText("Pendências");
+        depedenciesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                depedenciesButtonActionPerformed(evt);
+            }
+        });
+
+        listButton.setText("Listar livros");
+        listButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listButtonActionPerformed(evt);
             }
         });
 
@@ -59,9 +68,11 @@ public class LibrarianGUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(registerButton)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(listButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(registerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, Short.MAX_VALUE)
-                .addComponent(jToggleButton1)
+                .addComponent(depedenciesButton)
                 .addGap(130, 130, 130))
         );
         jPanel2Layout.setVerticalGroup(
@@ -70,8 +81,10 @@ public class LibrarianGUI extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerButton)
-                    .addComponent(jToggleButton1))
-                .addContainerGap(395, Short.MAX_VALUE))
+                    .addComponent(depedenciesButton))
+                .addGap(66, 66, 66)
+                .addComponent(listButton)
+                .addContainerGap(306, Short.MAX_VALUE))
         );
 
         logoutButton.setText("Sair");
@@ -108,19 +121,27 @@ public class LibrarianGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-	BookGUI book = new BookGUI();
-	book.setVisible(true);
+		BookGUI book = new BookGUI();
+		book.setVisible(true);
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-	this.setVisible(false);
-	LoginGUI login = new LoginGUI();
-	login.setVisible(true);
+		this.setVisible(false);
+		LoginGUI login = new LoginGUI();
+		login.setVisible(true);
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-	ScreenController.showScreen(ScreenController.PENDENCIES_SCREEN);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    private void depedenciesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depedenciesButtonActionPerformed
+		//ScreenController.showScreen(ScreenController.PENDENCIES_SCREEN);
+		PendenciesGUI pen = new PendenciesGUI();
+		pen.setVisible(true);
+    }//GEN-LAST:event_depedenciesButtonActionPerformed
+
+    private void listButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listButtonActionPerformed
+        // TODO add your handling code here:
+		ListGUI list = new ListGUI();
+		list.setVisible(true);
+    }//GEN-LAST:event_listButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,8 +179,9 @@ public class LibrarianGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton depedenciesButton;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JButton listButton;
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables

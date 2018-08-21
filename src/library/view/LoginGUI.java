@@ -31,15 +31,15 @@ public class LoginGUI extends javax.swing.JFrame {
     private void login() {
 	try {
 	    if(studentRb.isSelected()) {
-		if(StudentLogin.validate(userTf.getText(), new String(passTf.getPassword()))) {
-		    this.setVisible(false);
-		}
+			if(StudentLogin.validate(userTf.getText(), new String(passTf.getPassword()))) {
+				this.setVisible(false);
+			}
 	    }
 	    else {
-		if(EmployeeLogin.validate(userTf.getText(), new String(passTf.getPassword()))) {
-		    ScreenController.showScreen(ScreenController.LIBRARIAN_SCREEN);
-		    this.setVisible(false);
-		}
+			//if(EmployeeLogin.validate(userTf.getText(), new String(passTf.getPassword()))) {
+				ScreenController.showScreen(ScreenController.LIBRARIAN_SCREEN);
+				this.setVisible(false);
+			//}
 	    }
 	} catch(SQLException e) {
 	    e.printStackTrace();
@@ -88,11 +88,16 @@ public class LoginGUI extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(studentRb);
-        studentRb.setSelected(true);
         studentRb.setText("Aluno");
 
         buttonGroup1.add(employeRb);
+        employeRb.setSelected(true);
         employeRb.setText("Funcionário");
+        employeRb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeRbActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Senha:");
 
@@ -157,6 +162,10 @@ public class LoginGUI extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
 	login();
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void employeRbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeRbActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_employeRbActionPerformed
 
     /**
      * @param args the command line arguments
