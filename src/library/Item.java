@@ -12,6 +12,14 @@ public class Item {
             throw new IllegalArgumentException("Author can't be null.");
         }
         
+        if (title == null) {
+            throw new IllegalArgumentException("Title can't be null.");
+        }
+        
+        if (subject == null) {
+            throw new IllegalArgumentException("Subject can't be null");
+        }
+        
         this.author = author;
         this.title = title;
         this.subject = subject;
