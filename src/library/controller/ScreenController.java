@@ -5,11 +5,15 @@
  */
 package library.controller;
 
+import enums.Screens;
 import com.sun.tracing.dtrace.DependencyClass;
 import javax.swing.JFrame;
+import library.view.RegisterBookGUI;
 import library.view.LibrarianGUI;
+import library.view.BookListGUI;
 import library.view.LoginGUI;
 import library.view.PendenciesGUI;
+import library.view.RentBookGUI;
 
 /**
  *
@@ -17,14 +21,12 @@ import library.view.PendenciesGUI;
  */
 public abstract class ScreenController {
 
-    public static final int LOGIN_SCREEN = 0;
-    public static final int LIBRARIAN_SCREEN = 1;
-    public static final int PENDENCIES_SCREEN = 2;
-    public static final int STUDENT_SCREEN = 3;
-
     private static LoginGUI login = new LoginGUI();
     private static LibrarianGUI librarian = new LibrarianGUI();
+    private static RegisterBookGUI bookReg = new RegisterBookGUI();
+    private static BookListGUI bookList = new BookListGUI();
     private static PendenciesGUI pendencies = new PendenciesGUI();
+    private static RentBookGUI rentbook = new RentBookGUI();
 
     private static JFrame currentWindow = login;
 
@@ -34,18 +36,29 @@ public abstract class ScreenController {
 	pendencies.setVisible(false);
     }
 
-    public static void showScreen(int screen) {
+    public static void showScreen(Screens screen) {
 	currentWindow.setVisible(false);
 	switch(screen) {
-	    case LOGIN_SCREEN:
+	    case LOGIN:
 		currentWindow = login;
 		break;
-	    case LIBRARIAN_SCREEN:
+	    case LIBRARIAN:
 		currentWindow = librarian;
 		break;
-	    case PENDENCIES_SCREEN:
+	    case BOOK_REG:
+		currentWindow = bookReg;
+		break;
+	    case BOOK_LIST:
+		currentWindow = bookList;
+		break;
+	    case PENDENCIES:
 		currentWindow = pendencies;
+		break;
+	    case RENTBOOK:
+		currentWindow = rentbook;
+		break;
 	    default:
+		System.err.println("Problema ao trocar as janelas.");
 		break;
 	}
 	currentWindow.setVisible(true);

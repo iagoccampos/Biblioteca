@@ -5,23 +5,25 @@
  */
 package library.view;
 
+import enums.Screens;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import library.Item;
+import library.controller.ScreenController;
 
 /**
  *
  * @author Heitor
  */
-public class BookGUI extends javax.swing.JFrame {
+public class RegisterBookGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form BookGUI
      */
-    public BookGUI() {
-        initComponents();
+    public RegisterBookGUI() {
+	initComponents();
     }
 
     /**
@@ -33,7 +35,6 @@ public class BookGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        registerButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         titleTextfield = new javax.swing.JTextField();
         authorTextfield = new javax.swing.JTextField();
@@ -44,16 +45,10 @@ public class BookGUI extends javax.swing.JFrame {
         subjectTextfield = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cleanButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
+        registerButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
 
         setTitle("Cadastro de livros");
-
-        registerButton.setText("Cadastrar");
-        registerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerButtonActionPerformed(evt);
-            }
-        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastrar Livro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 36))); // NOI18N
         jPanel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -94,6 +89,20 @@ public class BookGUI extends javax.swing.JFrame {
 
         jLabel5.setText("Assunto");
 
+        cleanButton.setText("Limpar");
+        cleanButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cleanButtonActionPerformed(evt);
+            }
+        });
+
+        registerButton.setText("Cadastrar");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -101,27 +110,32 @@ public class BookGUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(subjectTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(authorTextfield)
-                            .addComponent(titleTextfield)
-                            .addComponent(stockTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(subjectTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cleanButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(registerButton))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(authorTextfield)
+                                .addComponent(titleTextfield)
+                                .addComponent(stockTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(titleTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -137,20 +151,16 @@ public class BookGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stockTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cleanButton)
+                    .addComponent(registerButton)))
         );
 
-        cleanButton.setText("Limpar");
-        cleanButton.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setText("Voltar");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cleanButtonActionPerformed(evt);
-            }
-        });
-
-        cancelButton.setText("Cancelar");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -161,138 +171,133 @@ public class BookGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(cleanButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(registerButton))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(backButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(registerButton)
-                    .addComponent(cleanButton)
-                    .addComponent(cancelButton))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cleanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanButtonActionPerformed
-        int option = JOptionPane.showConfirmDialog(
-                this.rootPane,
-                "Deseja realmente limpar?",
-                "Atenção",
-                JOptionPane.INFORMATION_MESSAGE);
-        if (option == 0) {
-            this.authorTextfield.setText("");
-            this.stockTextfield.setText("");
-            this.titleTextfield.setText("");
-            this.subjectTextfield.setText("");
-        }
+	int option = JOptionPane.showConfirmDialog(
+		this.rootPane,
+		"Deseja realmente limpar?",
+		"Atenção",
+		JOptionPane.INFORMATION_MESSAGE);
+	if(option == 0) {
+	    this.authorTextfield.setText("");
+	    this.stockTextfield.setText("");
+	    this.titleTextfield.setText("");
+	    this.subjectTextfield.setText("");
+	}
     }//GEN-LAST:event_cleanButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        String author = this.authorTextfield.getText();
-        String title = this.titleTextfield.getText();
-        String subject = this.subjectTextfield.getText();  
-		
-        Date date = new Date();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        String dateString = calendar.getTime().toString();
-        //System.out.println(dateString);
-        
-        int stock;
-        try {
-            stock = Integer.parseInt(this.stockTextfield.getText());
-        } catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(rootPane, "O estoque deve conter um número");
-            return;
-        }
-        
-		//data critic
-        if(author.equals("Autor") || title.equals("Título")|| subject.equals("Assunto") 
-				|| author.endsWith("") || title.equals("")|| subject.equals(""))
-			JOptionPane.showMessageDialog(rootPane, "Campos inválidos!");
-		else{
-			Item item = new Item(author, title, subject);
-			item.setStock(stock);
-			JOptionPane.showMessageDialog(rootPane, "Livro cadastrado!");
-		}
+	String author = this.authorTextfield.getText();
+	String title = this.titleTextfield.getText();
+	String subject = this.subjectTextfield.getText();
+
+	Date date = new Date();
+	Calendar calendar = new GregorianCalendar();
+	calendar.setTime(date);
+	String dateString = calendar.getTime().toString();
+	//System.out.println(dateString);
+
+	int stock;
+	try {
+	    stock = Integer.parseInt(this.stockTextfield.getText());
+	} catch(NumberFormatException e) {
+	    JOptionPane.showMessageDialog(rootPane, "O estoque deve conter um número");
+	    return;
+	}
+
+	//data critic
+	if(author.equals("Autor") || title.equals("Título") || subject.equals("Assunto")
+		|| author.endsWith("") || title.equals("") || subject.equals("")) {
+	    JOptionPane.showMessageDialog(rootPane, "Campos inválidos!");
+	}
+	else {
+	    Item item = new Item(author, title, subject);
+	    item.setStock(stock);
+	    JOptionPane.showMessageDialog(rootPane, "Livro cadastrado!");
+	}
     }//GEN-LAST:event_registerButtonActionPerformed
 
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_cancelButtonActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+	ScreenController.showScreen(Screens.LIBRARIAN);
+    }//GEN-LAST:event_backButtonActionPerformed
 
     private void titleTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleTextfieldMouseClicked
-        // TODO add your handling code here:
-		titleTextfield.setText("");
+	// TODO add your handling code here:
+	titleTextfield.setText("");
     }//GEN-LAST:event_titleTextfieldMouseClicked
 
     private void authorTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_authorTextfieldMouseClicked
-        // TODO add your handling code here:
-		authorTextfield.setText("");
+	// TODO add your handling code here:
+	authorTextfield.setText("");
     }//GEN-LAST:event_authorTextfieldMouseClicked
 
     private void subjectTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subjectTextfieldMouseClicked
-        // TODO add your handling code here:
-		subjectTextfield.setText("");
+	// TODO add your handling code here:
+	subjectTextfield.setText("");
     }//GEN-LAST:event_subjectTextfieldMouseClicked
 
     private void stockTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stockTextfieldMouseClicked
-        // TODO add your handling code here:
-		stockTextfield.setText("");
+	// TODO add your handling code here:
+	stockTextfield.setText("");
     }//GEN-LAST:event_stockTextfieldMouseClicked
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BookGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BookGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BookGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BookGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+	/* Set the Nimbus look and feel */
+	//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+	/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+	 */
+	try {
+	    for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+		if("Nimbus".equals(info.getName())) {
+		    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+		    break;
+		}
+	    }
+	} catch(ClassNotFoundException ex) {
+	    java.util.logging.Logger.getLogger(RegisterBookGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	} catch(InstantiationException ex) {
+	    java.util.logging.Logger.getLogger(RegisterBookGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	} catch(IllegalAccessException ex) {
+	    java.util.logging.Logger.getLogger(RegisterBookGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	} catch(javax.swing.UnsupportedLookAndFeelException ex) {
+	    java.util.logging.Logger.getLogger(RegisterBookGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	}
+	//</editor-fold>
+	//</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BookGUI().setVisible(true);
-            }
-        });
+	/* Create and display the form */
+	java.awt.EventQueue.invokeLater(new Runnable() {
+	    public void run() {
+		new RegisterBookGUI().setVisible(true);
+	    }
+	});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField authorTextfield;
-    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JButton cleanButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

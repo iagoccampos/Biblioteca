@@ -5,6 +5,7 @@
  */
 package library.view;
 
+import enums.Screens;
 import library.controller.ScreenController;
 
 /**
@@ -17,8 +18,8 @@ public class LibrarianGUI extends javax.swing.JFrame {
      * Creates new form LibrarianGUI
      */
     public LibrarianGUI() {
-		initComponents();
-		this.setTitle("Gerenciador");
+	initComponents();
+	this.setTitle("Gerenciador");
     }
 
     /**
@@ -32,8 +33,9 @@ public class LibrarianGUI extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         registerButton = new javax.swing.JButton();
-        depedenciesButton = new javax.swing.JToggleButton();
+        pedenciesButton = new javax.swing.JToggleButton();
         listButton = new javax.swing.JButton();
+        rentButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,10 +50,10 @@ public class LibrarianGUI extends javax.swing.JFrame {
             }
         });
 
-        depedenciesButton.setText("Pendências");
-        depedenciesButton.addActionListener(new java.awt.event.ActionListener() {
+        pedenciesButton.setText("Pendências");
+        pedenciesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                depedenciesButtonActionPerformed(evt);
+                pedenciesButtonActionPerformed(evt);
             }
         });
 
@@ -59,6 +61,13 @@ public class LibrarianGUI extends javax.swing.JFrame {
         listButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listButtonActionPerformed(evt);
+            }
+        });
+
+        rentButton.setText("Alugar");
+        rentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rentButtonActionPerformed(evt);
             }
         });
 
@@ -72,7 +81,9 @@ public class LibrarianGUI extends javax.swing.JFrame {
                     .addComponent(listButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(registerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, Short.MAX_VALUE)
-                .addComponent(depedenciesButton)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pedenciesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(130, 130, 130))
         );
         jPanel2Layout.setVerticalGroup(
@@ -81,9 +92,11 @@ public class LibrarianGUI extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerButton)
-                    .addComponent(depedenciesButton))
+                    .addComponent(pedenciesButton))
                 .addGap(66, 66, 66)
-                .addComponent(listButton)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listButton)
+                    .addComponent(rentButton))
                 .addContainerGap(306, Short.MAX_VALUE))
         );
 
@@ -121,27 +134,24 @@ public class LibrarianGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-		BookGUI book = new BookGUI();
-		book.setVisible(true);
+	ScreenController.showScreen(Screens.BOOK_REG);
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-		this.setVisible(false);
-		LoginGUI login = new LoginGUI();
-		login.setVisible(true);
+	ScreenController.showScreen(Screens.LOGIN);
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void depedenciesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depedenciesButtonActionPerformed
-		//ScreenController.showScreen(ScreenController.PENDENCIES_SCREEN);
-		PendenciesGUI pen = new PendenciesGUI();
-		pen.setVisible(true);
-    }//GEN-LAST:event_depedenciesButtonActionPerformed
+    private void pedenciesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedenciesButtonActionPerformed
+	ScreenController.showScreen(Screens.PENDENCIES);
+    }//GEN-LAST:event_pedenciesButtonActionPerformed
 
     private void listButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listButtonActionPerformed
-        // TODO add your handling code here:
-		ListGUI list = new ListGUI();
-		list.setVisible(true);
+	ScreenController.showScreen(Screens.BOOK_LIST);
     }//GEN-LAST:event_listButtonActionPerformed
+
+    private void rentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentButtonActionPerformed
+	ScreenController.showScreen(Screens.RENTBOOK);
+    }//GEN-LAST:event_rentButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,10 +189,11 @@ public class LibrarianGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton depedenciesButton;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton listButton;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JToggleButton pedenciesButton;
     private javax.swing.JButton registerButton;
+    private javax.swing.JButton rentButton;
     // End of variables declaration//GEN-END:variables
 }
