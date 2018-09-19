@@ -6,7 +6,18 @@
 package library.view;
 
 import enums.Screens;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import library.controller.ScreenController;
+import library.db.ConnectionFactory;
 
 /**
  *
@@ -14,11 +25,13 @@ import library.controller.ScreenController;
  */
 public class PendenciesGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DependenciesGUI
-     */
+    private DefaultListModel dlm = new DefaultListModel();
+
+    String reg;
+
     public PendenciesGUI() {
 	initComponents();
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
@@ -34,49 +47,70 @@ public class PendenciesGUI extends javax.swing.JFrame {
         registrationTF = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        jList = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
+        releaseBookjButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listagem de dependências");
+        setTitle("Pendências");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Consulta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 36))); // NOI18N
 
-        registrationTF.setText("Matrícula");
-        registrationTF.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registrationTFMouseClicked(evt);
+        searchButton.setText("Consultar");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
             }
         });
 
-        searchButton.setText("Consultar");
+        jList.setModel(dlm);
+        jScrollPane2.setViewportView(jList);
 
-        jScrollPane2.setViewportView(jList2);
+        jLabel1.setText("Matrícula:");
+
+        releaseBookjButton.setText("Devolver Livro Selecionado");
+        releaseBookjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                releaseBookjButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(registrationTF, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton))
-                .addGap(93, 93, 93)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(221, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(registrationTF, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(220, 220, 220)
+                        .addComponent(releaseBookjButton)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(registrationTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(registrationTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchButton)))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(releaseBookjButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         backButton.setText("Voltar");
@@ -92,18 +126,19 @@ public class PendenciesGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(backButton))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(backButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(backButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backButton)
+                .addContainerGap())
         );
 
         pack();
@@ -113,10 +148,87 @@ public class PendenciesGUI extends javax.swing.JFrame {
 	ScreenController.showScreen(Screens.LIBRARIAN);
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void registrationTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrationTFMouseClicked
-	// TODO add your handling code here:
-	registrationTF.setText("");
-    }//GEN-LAST:event_registrationTFMouseClicked
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+	searchButton.setEnabled(false);
+
+	reg = registrationTF.getText();
+	String title, author, date;
+	List<Integer> idBookList = new ArrayList<Integer>();
+	List<Integer> idRentList = new ArrayList<Integer>();
+
+	dlm.clear();
+
+	try {
+	    Connection conn = ConnectionFactory.getConnection();
+	    Statement statement = conn.createStatement();
+	    ResultSet result = statement.executeQuery("SELECT book_rental_id, book_id FROM "
+		    + "library.book_rental WHERE student_reg = " + reg);
+
+	    if(!result.next()) {
+		JOptionPane.showMessageDialog(this, "Aluno livre de pendências.");
+	    }
+
+	    result.beforeFirst();
+
+	    while(result.next()) {
+		idBookList.add(result.getInt("book_id"));
+		idRentList.add(result.getInt("book_rental_id"));
+	    }
+
+	    for(int i = 0; i < idBookList.size(); i++) {
+		int id = idBookList.get(i);
+		ResultSet bookResult = statement.executeQuery("SELECT title, "
+			+ "author, date FROM library.books WHERE book_id = "
+			+ id);
+
+		bookResult.next();
+		title = bookResult.getString("title");
+		author = bookResult.getString("author");
+		date = bookResult.getString("date");
+
+		dlm.add(i, date + " - " + title + " - " + author + " - ("
+			+ idRentList.get(i) + ")");
+	    }
+
+	    conn.close();
+	    statement.close();
+	    result.close();
+	} catch(SQLException e) {
+	    searchButton.setEnabled(true);
+	}
+
+	searchButton.setEnabled(true);
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void releaseBookjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_releaseBookjButtonActionPerformed
+	int selectedIndex = jList.getSelectedIndex();
+
+	if(selectedIndex == -1) {
+	    JOptionPane.showMessageDialog(this, "Selecione o livro a ser devolvido na lista.");
+	    return;
+	}
+
+	String selectedText = dlm.get(selectedIndex).toString();
+	int id = Integer.parseInt(selectedText.substring(selectedText.indexOf("(") + 1, selectedText.indexOf(")")));
+
+	try {
+	    Connection conn = ConnectionFactory.getConnection();
+	    PreparedStatement st = conn.prepareStatement("DELETE FROM "
+		    + "library.book_rental WHERE book_rental_id = " + id);
+
+	    int res = st.executeUpdate();
+
+	    if(res > 0) {
+		dlm.removeElementAt(selectedIndex);
+	    }
+
+	    conn.close();
+	    st.close();
+	} catch(SQLException e) {
+
+	}
+
+    }//GEN-LAST:event_releaseBookjButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,10 +268,12 @@ public class PendenciesGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JList<String> jList2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> jList;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField registrationTF;
+    private javax.swing.JButton releaseBookjButton;
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
 }
