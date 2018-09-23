@@ -6,12 +6,23 @@
 package library.view;
 
 import enums.Screens;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import library.Item;
 import library.controller.ScreenController;
+import library.db.ConnectionFactory;
 
 /**
  *
@@ -24,6 +35,7 @@ public class RegisterBookGUI extends javax.swing.JFrame {
      */
     public RegisterBookGUI() {
 	initComponents();
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
@@ -38,7 +50,6 @@ public class RegisterBookGUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         titleTextfield = new javax.swing.JTextField();
         authorTextfield = new javax.swing.JTextField();
-        stockTextfield = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -46,6 +57,7 @@ public class RegisterBookGUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         cleanButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
+        stockTf = new javax.swing.JFormattedTextField();
         backButton = new javax.swing.JButton();
 
         setTitle("Cadastro de livros");
@@ -53,41 +65,13 @@ public class RegisterBookGUI extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastrar Livro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 36))); // NOI18N
         jPanel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
 
-        titleTextfield.setText("Título");
-        titleTextfield.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                titleTextfieldMouseClicked(evt);
-            }
-        });
+        jLabel1.setText("Título:");
 
-        authorTextfield.setText("Autor");
-        authorTextfield.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                authorTextfieldMouseClicked(evt);
-            }
-        });
+        jLabel2.setText("Autor:");
 
-        stockTextfield.setText("Estoque");
-        stockTextfield.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                stockTextfieldMouseClicked(evt);
-            }
-        });
+        jLabel4.setText("Estoque:");
 
-        jLabel1.setText("Título");
-
-        jLabel2.setText("Autor");
-
-        jLabel4.setText("Estoque");
-
-        subjectTextfield.setText("Assunto");
-        subjectTextfield.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                subjectTextfieldMouseClicked(evt);
-            }
-        });
-
-        jLabel5.setText("Assunto");
+        jLabel5.setText("Assunto:");
 
         cleanButton.setText("Limpar");
         cleanButton.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +87,8 @@ public class RegisterBookGUI extends javax.swing.JFrame {
             }
         });
 
+        stockTf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -110,27 +96,25 @@ public class RegisterBookGUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(subjectTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(stockTf, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                            .addComponent(authorTextfield)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(cleanButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(registerButton))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(authorTextfield)
-                                .addComponent(titleTextfield)
-                                .addComponent(stockTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)))))
-                .addContainerGap())
+                            .addComponent(titleTextfield)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(subjectTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,8 +133,8 @@ public class RegisterBookGUI extends javax.swing.JFrame {
                     .addComponent(subjectTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(stockTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(stockTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cleanButton)
@@ -173,7 +157,7 @@ public class RegisterBookGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 238, Short.MAX_VALUE)
                         .addComponent(backButton)))
                 .addContainerGap())
         );
@@ -191,14 +175,11 @@ public class RegisterBookGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cleanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanButtonActionPerformed
-	int option = JOptionPane.showConfirmDialog(
-		this.rootPane,
-		"Deseja realmente limpar?",
-		"Atenção",
-		JOptionPane.INFORMATION_MESSAGE);
+	int option = JOptionPane.showConfirmDialog(this.rootPane, "Deseja realmente limpar?",
+		"Atenção", JOptionPane.INFORMATION_MESSAGE);
 	if(option == 0) {
 	    this.authorTextfield.setText("");
-	    this.stockTextfield.setText("");
+	    this.stockTf.setText("");
 	    this.titleTextfield.setText("");
 	    this.subjectTextfield.setText("");
 	}
@@ -208,56 +189,39 @@ public class RegisterBookGUI extends javax.swing.JFrame {
 	String author = this.authorTextfield.getText();
 	String title = this.titleTextfield.getText();
 	String subject = this.subjectTextfield.getText();
+	String stock = this.stockTf.getText();
 
-	Date date = new Date();
-	Calendar calendar = new GregorianCalendar();
-	calendar.setTime(date);
-	String dateString = calendar.getTime().toString();
-	//System.out.println(dateString);
-
-	int stock;
-	try {
-	    stock = Integer.parseInt(this.stockTextfield.getText());
-	} catch(NumberFormatException e) {
-	    JOptionPane.showMessageDialog(rootPane, "O estoque deve conter um número");
+	//data critic
+	if(author.equals("") || title.equals("") || subject.equals("") || stock.equals("")) {
+	    JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos!");
 	    return;
 	}
 
-	//data critic
-	if(author.equals("Autor") || title.equals("Título") || subject.equals("Assunto")
-		|| author.endsWith("") || title.equals("") || subject.equals("")) {
-	    JOptionPane.showMessageDialog(rootPane, "Campos inválidos!");
-	}
-	else {
-	    Item item = new Item(author, title, subject);
-	    item.setStock(stock);
-	    JOptionPane.showMessageDialog(rootPane, "Livro cadastrado!");
+	DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	Date date = new Date();
+	String dateString = format.format(date);
+
+	try {
+	    Connection conn = ConnectionFactory.getConnection();
+	    PreparedStatement statement = conn.prepareStatement("INSERT INTO `library`.`books`"
+		    + " (`title`, `author`, `date`, `subject`, `availability`) "
+		    + "VALUES ('" + title + "', '" + author + "', '" + dateString
+		    + "', '" + subject + "', '" + stock + "')");
+
+	    if(statement.executeUpdate() > 0) {
+		JOptionPane.showMessageDialog(rootPane, "Livro cadastrado!");
+	    }
+
+	    conn.close();
+	    statement.close();
+	} catch(SQLException e) {
+	    JOptionPane.showMessageDialog(this, "Problemas de conexão ao banco de dados.");
 	}
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 	ScreenController.showScreen(Screens.LIBRARIAN);
     }//GEN-LAST:event_backButtonActionPerformed
-
-    private void titleTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleTextfieldMouseClicked
-	// TODO add your handling code here:
-	titleTextfield.setText("");
-    }//GEN-LAST:event_titleTextfieldMouseClicked
-
-    private void authorTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_authorTextfieldMouseClicked
-	// TODO add your handling code here:
-	authorTextfield.setText("");
-    }//GEN-LAST:event_authorTextfieldMouseClicked
-
-    private void subjectTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subjectTextfieldMouseClicked
-	// TODO add your handling code here:
-	subjectTextfield.setText("");
-    }//GEN-LAST:event_subjectTextfieldMouseClicked
-
-    private void stockTextfieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stockTextfieldMouseClicked
-	// TODO add your handling code here:
-	stockTextfield.setText("");
-    }//GEN-LAST:event_stockTextfieldMouseClicked
 
     /**
      * @param args the command line arguments
@@ -305,7 +269,7 @@ public class RegisterBookGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton registerButton;
-    private javax.swing.JTextField stockTextfield;
+    private javax.swing.JFormattedTextField stockTf;
     private javax.swing.JTextField subjectTextfield;
     private javax.swing.JTextField titleTextfield;
     // End of variables declaration//GEN-END:variables
