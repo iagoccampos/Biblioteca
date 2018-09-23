@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.InputVerifier;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import library.controller.ScreenController;
@@ -26,7 +27,7 @@ import library.db.ConnectionFactory;
 public class PendenciesGUI extends javax.swing.JFrame {
 
     private DefaultListModel dlm = new DefaultListModel();
-
+    InputVerifier iV;
     String reg;
 
     public PendenciesGUI() {
@@ -44,12 +45,12 @@ public class PendenciesGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        registrationTF = new javax.swing.JTextField();
-        searchButton = new javax.swing.JButton();
+        registrationTf = new javax.swing.JTextField();
+        searchBt = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList = new javax.swing.JList<>();
+        pendenciesL = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
-        releaseBookjButton = new javax.swing.JButton();
+        releaseBookjBt = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -57,22 +58,29 @@ public class PendenciesGUI extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Consulta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 36))); // NOI18N
 
-        searchButton.setText("Consultar");
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
+        registrationTf.setColumns(5);
+        registrationTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
+                registrationTfActionPerformed(evt);
             }
         });
 
-        jList.setModel(dlm);
-        jScrollPane2.setViewportView(jList);
+        searchBt.setText("Consultar");
+        searchBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtActionPerformed(evt);
+            }
+        });
+
+        pendenciesL.setModel(dlm);
+        jScrollPane2.setViewportView(pendenciesL);
 
         jLabel1.setText("Matrícula:");
 
-        releaseBookjButton.setText("Devolver Livro Selecionado");
-        releaseBookjButton.addActionListener(new java.awt.event.ActionListener() {
+        releaseBookjBt.setText("Devolver Livro Selecionado");
+        releaseBookjBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                releaseBookjButtonActionPerformed(evt);
+                releaseBookjBtActionPerformed(evt);
             }
         });
 
@@ -87,13 +95,13 @@ public class PendenciesGUI extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(7, 7, 7)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(registrationTF, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
+                            .addComponent(searchBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(registrationTf, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(220, 220, 220)
-                        .addComponent(releaseBookjButton)))
+                        .addComponent(releaseBookjBt)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -104,12 +112,12 @@ public class PendenciesGUI extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(registrationTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(registrationTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton)))
+                        .addComponent(searchBt)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(releaseBookjButton)
+                .addComponent(releaseBookjBt)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -148,10 +156,10 @@ public class PendenciesGUI extends javax.swing.JFrame {
 	ScreenController.showScreen(Screens.LIBRARIAN);
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-	searchButton.setEnabled(false);
+    private void searchBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtActionPerformed
+	searchBt.setEnabled(false);
 
-	reg = registrationTF.getText();
+	reg = registrationTf.getText();
 	String title, author, date;
 	List<Integer> idBookList = new ArrayList<Integer>();
 	List<Integer> idRentList = new ArrayList<Integer>();
@@ -194,17 +202,20 @@ public class PendenciesGUI extends javax.swing.JFrame {
 	    statement.close();
 	    result.close();
 	} catch(SQLException e) {
-	    searchButton.setEnabled(true);
+	    JOptionPane.showMessageDialog(this, "Problemas de conexão ao banco de dados.");
+	} finally {
+	    searchBt.setEnabled(true);
 	}
+    }//GEN-LAST:event_searchBtActionPerformed
 
-	searchButton.setEnabled(true);
-    }//GEN-LAST:event_searchButtonActionPerformed
+    private void releaseBookjBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_releaseBookjBtActionPerformed
+	releaseBookjBt.setEnabled(false);
 
-    private void releaseBookjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_releaseBookjButtonActionPerformed
-	int selectedIndex = jList.getSelectedIndex();
+	int selectedIndex = pendenciesL.getSelectedIndex();
 
 	if(selectedIndex == -1) {
 	    JOptionPane.showMessageDialog(this, "Selecione o livro a ser devolvido na lista.");
+	    releaseBookjBt.setEnabled(true);
 	    return;
 	}
 
@@ -225,10 +236,17 @@ public class PendenciesGUI extends javax.swing.JFrame {
 	    conn.close();
 	    st.close();
 	} catch(SQLException e) {
-
+	    JOptionPane.showMessageDialog(this, "Problemas de conexão ao banco de dados.");
+	} finally {
+	    releaseBookjBt.setEnabled(true);
 	}
+    }//GEN-LAST:event_releaseBookjBtActionPerformed
 
-    }//GEN-LAST:event_releaseBookjButtonActionPerformed
+    //On Enter key pressed
+    private void registrationTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationTfActionPerformed
+	//Perform same action of search button
+	searchBtActionPerformed(evt);
+    }//GEN-LAST:event_registrationTfActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,16 +282,17 @@ public class PendenciesGUI extends javax.swing.JFrame {
 		new PendenciesGUI().setVisible(true);
 	    }
 	});
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField registrationTF;
-    private javax.swing.JButton releaseBookjButton;
-    private javax.swing.JButton searchButton;
+    private javax.swing.JList<String> pendenciesL;
+    private javax.swing.JTextField registrationTf;
+    private javax.swing.JButton releaseBookjBt;
+    private javax.swing.JButton searchBt;
     // End of variables declaration//GEN-END:variables
 }
