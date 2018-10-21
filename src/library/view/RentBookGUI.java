@@ -6,8 +6,20 @@
 package library.view;
 
 import enums.Screens;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import library.controller.ScreenController;
+import library.db.ConnectionFactory;
 
 /**
  *
@@ -20,7 +32,7 @@ public class RentBookGUI extends javax.swing.JFrame {
      */
     public RentBookGUI() {
 	initComponents();
-	this.setTitle("Alugar Livro");
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
@@ -34,13 +46,14 @@ public class RentBookGUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        registrationTf = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         booknameTf = new javax.swing.JTextField();
         rentBt = new javax.swing.JButton();
+        registrationTf = new javax.swing.JFormattedTextField();
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Alugar Livro");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Alugar Livro"));
 
@@ -61,6 +74,13 @@ public class RentBookGUI extends javax.swing.JFrame {
             }
         });
 
+        registrationTf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        registrationTf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrationTfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -74,8 +94,8 @@ public class RentBookGUI extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(registrationTf)
-                            .addComponent(booknameTf, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))
+                            .addComponent(booknameTf, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(registrationTf)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(rentBt)))
@@ -84,7 +104,7 @@ public class RentBookGUI extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(registrationTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -134,26 +154,133 @@ public class RentBookGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_booknameTfActionPerformed
 
     private void rentBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentBtActionPerformed
+	rentBt.setEnabled(false);
+
 	String reg = registrationTf.getText();
+	String bookTitle = booknameTf.getText();
+
+	if(reg.equals("") || bookTitle.equals("")) {
+	    JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos.");
+	    rentBt.setEnabled(true);
+	    return;
+	}
 
 	if(checkStudentPendencies(reg)) {
-	    rentBook(reg);
+	    rentBook(reg, bookTitle);
 	}
-	else {
-	    JOptionPane.showMessageDialog(this, "O aluno possui pendências com a biblioteca.");
-	}
+
+	rentBt.setEnabled(true);
     }//GEN-LAST:event_rentBtActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 	ScreenController.showScreen(Screens.LIBRARIAN);
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void registrationTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationTfActionPerformed
+	// TODO add your handling code here:
+    }//GEN-LAST:event_registrationTfActionPerformed
+
     private boolean checkStudentPendencies(String reg) {
-	return true;
+	try {
+	    Connection connection = ConnectionFactory.getConnection();
+	    Statement statement = connection.createStatement();
+	    ResultSet result = statement.executeQuery("SELECT count(1) FROM students "
+		    + "WHERE registration=" + reg);
+	    result.next();
+
+	    //Se a matricula do aluno existe
+	    if(result.getInt("count(1)") == 1) {
+		result = statement.executeQuery("SELECT * FROM book_rental"
+			+ " WHERE student_reg=" + reg);
+
+		//Se o aluno nao possui nenhum livro alugado
+		if(!result.next()) {
+		    connection.close();
+		    statement.close();
+		    return true;
+		}
+		result.beforeFirst();
+
+		Date rentDate;
+		Date now = new Date();
+
+		while(result.next()) {
+		    rentDate = result.getDate("devolution_date");
+
+		    long diffInMillies = rentDate.getTime() - now.getTime();
+		    long dayDif = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+		    if(dayDif > 7) {
+			connection.close();
+			statement.close();
+			JOptionPane.showMessageDialog(this, "Aluno possui pendências.");
+			return false;
+		    }
+		}
+	    }
+	    else {
+		JOptionPane.showMessageDialog(this, "Matrícula inexistente.");
+	    }
+
+	    connection.close();
+	    statement.close();
+
+	    return true;
+	} catch(SQLException e) {
+	    JOptionPane.showMessageDialog(this, "Problemas de conexão.");
+	    e.printStackTrace();
+	}
+
+	return false;
     }
 
-    private void rentBook(String reg) {
+    private void rentBook(String reg, String bookTitle) {
+	try {
+	    Connection connection = ConnectionFactory.getConnection();
+	    Statement statement = connection.createStatement();
+	    ResultSet result = statement.executeQuery("SELECT * FROM books "
+		    + "WHERE title='" + bookTitle + "'");
 
+	    if(!result.next()) {
+		JOptionPane.showMessageDialog(this, "Livro inexistente");
+		connection.close();
+		statement.close();
+		return;
+	    }
+
+	    result.beforeFirst();
+	    result.next();
+
+	    if(result.getInt("availability") == 0) {
+		JOptionPane.showMessageDialog(this, "Livro indisponivel.");
+		connection.close();
+		statement.close();
+		return;
+	    }
+
+	    int bookId = result.getInt("book_id");
+
+	    //Calculate devolution date
+	    DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    Date date = new Date();
+	    Calendar c = Calendar.getInstance();
+	    c.setTime(date);
+	    c.add(Calendar.DATE, 7);
+	    date = c.getTime();
+	    String devolutionDate = format.format(date);
+
+	    PreparedStatement preStatement = connection.prepareStatement("INSERT "
+		    + "INTO `library`.`book_rental` (`book_id`, `student_reg`, "
+		    + "`devolution_date`) VALUES ('" + bookId + "', '" + reg
+		    + "', '" + devolutionDate + "');");
+
+	    if(preStatement.executeUpdate() > 0) {
+		JOptionPane.showMessageDialog(rootPane, "Livro alugado!");
+	    }
+
+	} catch(SQLException e) {
+	    e.printStackTrace();
+	}
     }
 
     /**
@@ -198,7 +325,7 @@ public class RentBookGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField registrationTf;
+    private javax.swing.JFormattedTextField registrationTf;
     private javax.swing.JButton rentBt;
     // End of variables declaration//GEN-END:variables
 }
