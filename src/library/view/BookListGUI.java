@@ -6,7 +6,18 @@
 package library.view;
 
 import enums.Screens;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import library.controller.ScreenController;
+import library.db.ConnectionFactory;
 
 /**
  *
@@ -14,12 +25,17 @@ import library.controller.ScreenController;
  */
 public class BookListGUI extends javax.swing.JFrame {
 
+    private DefaultListModel dlm = new DefaultListModel();
+    private List<Integer> ids = new ArrayList<>();
+    private JFrame editPanel = new EditBookGUI();
+
     /**
      * Creates new form ListGUI
      */
     public BookListGUI() {
 	initComponents();
-	this.setTitle("Listar");
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	editPanel.setVisible(false);
     }
 
     /**
@@ -34,10 +50,14 @@ public class BookListGUI extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        searchTF = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        authorRb = new javax.swing.JRadioButton();
+        titleRb = new javax.swing.JRadioButton();
+        searchTf = new javax.swing.JTextField();
+        searchBt = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bookList = new javax.swing.JList<>();
+        deleteBt = new javax.swing.JToggleButton();
+        editBt = new javax.swing.JToggleButton();
         backButton = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listagem de livros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
@@ -45,21 +65,42 @@ public class BookListGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Listar por:");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Autor");
-        jRadioButton1.setToolTipText("");
+        buttonGroup1.add(authorRb);
+        authorRb.setText("Autor");
+        authorRb.setToolTipText("");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Gênero");
-
-        searchTF.setText("Nome ou gênero");
-        searchTF.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                searchTFMouseClicked(evt);
+        buttonGroup1.add(titleRb);
+        titleRb.setSelected(true);
+        titleRb.setText("Título");
+        titleRb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                titleRbActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Buscar");
+        searchBt.setText("Buscar");
+        searchBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtActionPerformed(evt);
+            }
+        });
+
+        bookList.setModel(dlm);
+        jScrollPane1.setViewportView(bookList);
+
+        deleteBt.setText("Deletar");
+        deleteBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtActionPerformed(evt);
+            }
+        });
+
+        editBt.setText("Editar");
+        editBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -67,16 +108,24 @@ public class BookListGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(391, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(titleRb)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(authorRb)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchBt))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(deleteBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(editBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,13 +133,18 @@ public class BookListGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jRadioButton1)
-                    .addComponent(searchTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(searchTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(titleRb)
+                    .addComponent(searchBt)
+                    .addComponent(authorRb))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jButton1))
-                .addContainerGap(337, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(deleteBt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editBt)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         backButton.setText("Voltar");
@@ -106,21 +160,21 @@ public class BookListGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(backButton)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(backButton)
-                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
 
         pack();
@@ -130,10 +184,107 @@ public class BookListGUI extends javax.swing.JFrame {
 	ScreenController.showScreen(Screens.LIBRARIAN);
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void searchTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchTFMouseClicked
+    private void deleteBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtActionPerformed
+	deleteBt.setEnabled(false);
+
+	if(bookList.getSelectedIndex() == -1) {
+	    JOptionPane.showMessageDialog(this, "Selecione um livro.");
+	    deleteBt.setEnabled(true);
+	    return;
+	}
+
+	int selectedIndex = bookList.getSelectedIndex();
+	int selectedId = ids.get(selectedIndex);
+
+	try {
+	    Connection conn = ConnectionFactory.getConnection();
+	    PreparedStatement st = conn.prepareStatement("DELETE FROM library.books"
+		    + " WHERE book_id = " + selectedId);
+
+	    int res = st.executeUpdate();
+
+	    if(res > 0) {
+		dlm.removeElementAt(selectedIndex);
+	    }
+
+	    JOptionPane.showMessageDialog(this, "Livro removido!");
+
+	} catch(SQLException e) {
+	    if(e.getErrorCode() == 1451) {
+		JOptionPane.showMessageDialog(this, "Não foi possivel remover o livro\npois ele se encontra pendente.");
+	    }
+	}
+
+	deleteBt.setEnabled(true);
+    }//GEN-LAST:event_deleteBtActionPerformed
+
+    private void editBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtActionPerformed
+	editBt.setEnabled(false);
+
+	if(bookList.getSelectedIndex() == -1) {
+	    JOptionPane.showMessageDialog(this, "Selecione um livro.");
+	    editBt.setEnabled(true);
+	    return;
+	}
+
+	((EditBookGUI) editPanel).updateInputValues(ids.get(bookList.getSelectedIndex()));
+	this.setVisible(false);
+	editPanel.setVisible(true);
+
+	editBt.setEnabled(true);
+    }//GEN-LAST:event_editBtActionPerformed
+
+    private void searchBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtActionPerformed
+	searchBt.setEnabled(false);
+
+	if(searchTf.getText().equals("")) {
+	    JOptionPane.showMessageDialog(this, "Digite o nome do livro a ser procurado.");
+	    searchBt.setEnabled(true);
+	    return;
+	}
+
+	dlm.clear();
+
+	String searchType = titleRb.isSelected() ? "title" : "author";
+
+	try {
+	    Connection conn = ConnectionFactory.getConnection();
+	    Statement statement = conn.createStatement();
+	    ResultSet result = statement.executeQuery("SELECT * FROM library.books "
+		    + "WHERE " + searchType + " = '" + searchTf.getText() + "'");
+
+	    //Se nenhum livro foi encontrado
+	    if(!result.next()) {
+		conn.close();
+		statement.close();
+		JOptionPane.showMessageDialog(this, "Livro não encontrado.");
+		searchBt.setEnabled(true);
+		return;
+	    }
+	    result.beforeFirst();
+
+	    while(result.next()) {
+		ids.add(result.getInt(1));
+		String title = result.getString(2);
+		String author = result.getString(3);
+		String date = result.getString(4);
+		String subject = result.getString(5);
+		String availability = result.getString(6);
+
+		dlm.addElement(title + " - " + author + " - " + date
+			+ " - " + subject + " - " + availability);
+	    }
+
+	} catch(SQLException e) {
+	    //System.out.println(e.getMessage().contains("SQLIntegrityConstraintViolationExceptio"));
+	}
+
+	searchBt.setEnabled(true);
+    }//GEN-LAST:event_searchBtActionPerformed
+
+    private void titleRbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleRbActionPerformed
 	// TODO add your handling code here:
-	searchTF.setText("");
-    }//GEN-LAST:event_searchTFMouseClicked
+    }//GEN-LAST:event_titleRbActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,13 +323,17 @@ public class BookListGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton authorRb;
     private javax.swing.JButton backButton;
+    private javax.swing.JList<String> bookList;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JToggleButton deleteBt;
+    private javax.swing.JToggleButton editBt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField searchTF;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton searchBt;
+    private javax.swing.JTextField searchTf;
+    private javax.swing.JRadioButton titleRb;
     // End of variables declaration//GEN-END:variables
 }
