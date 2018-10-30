@@ -6,7 +6,6 @@
 package library.controller;
 
 import enums.Screens;
-import com.sun.tracing.dtrace.DependencyClass;
 import javax.swing.JFrame;
 import library.view.RegisterBookGUI;
 import library.view.LibrarianGUI;
@@ -14,6 +13,7 @@ import library.view.BookListGUI;
 import library.view.LoginGUI;
 import library.view.PendenciesGUI;
 import library.view.RentBookGUI;
+import library.view.StudentBookListGUI;
 import library.view.StudentGUI;
 
 /**
@@ -25,6 +25,7 @@ public abstract class ScreenController {
     private static LoginGUI login = new LoginGUI();
     private static LibrarianGUI librarian = new LibrarianGUI();
     private static StudentGUI student = new StudentGUI();
+    private static StudentBookListGUI studentBookList = new StudentBookListGUI();
     private static RegisterBookGUI bookReg = new RegisterBookGUI();
     private static BookListGUI bookList = new BookListGUI();
     private static PendenciesGUI pendencies = new PendenciesGUI();
@@ -49,6 +50,9 @@ public abstract class ScreenController {
 		break;
 	    case STUDENT:
 		currentWindow = student;
+		break;
+	    case STUDENT_BOOK_LIST:
+		currentWindow = studentBookList;
 		break;
 	    case BOOK_REG:
 		currentWindow = bookReg;

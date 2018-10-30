@@ -118,7 +118,7 @@ public class StudentGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_pedenciesButtonActionPerformed
 
     private void listButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listButtonActionPerformed
-	ScreenController.showScreen(Screens.BOOK_LIST);
+	ScreenController.showScreen(Screens.STUDENT_BOOK_LIST);
     }//GEN-LAST:event_listButtonActionPerformed
 
     /**
