@@ -15,6 +15,7 @@ import library.view.PendenciesGUI;
 import library.view.RentBookGUI;
 import library.view.StudentBookListGUI;
 import library.view.StudentGUI;
+import library.view.StudentPendenciesGUI;
 
 /**
  *
@@ -26,6 +27,7 @@ public abstract class ScreenController {
     private static LibrarianGUI librarian = new LibrarianGUI();
     private static StudentGUI student = new StudentGUI();
     private static StudentBookListGUI studentBookList = new StudentBookListGUI();
+    private static StudentPendenciesGUI studendPendencies = new StudentPendenciesGUI();
     private static RegisterBookGUI bookReg = new RegisterBookGUI();
     private static BookListGUI bookList = new BookListGUI();
     private static PendenciesGUI pendencies = new PendenciesGUI();
@@ -35,8 +37,6 @@ public abstract class ScreenController {
 
     public static void init() {
 	login.setVisible(true);
-	librarian.setVisible(false);
-	pendencies.setVisible(false);
     }
 
     public static void showScreen(Screens screen) {
@@ -53,6 +53,9 @@ public abstract class ScreenController {
 		break;
 	    case STUDENT_BOOK_LIST:
 		currentWindow = studentBookList;
+		break;
+	    case STUDENT_PENDENCIES:
+		currentWindow = studendPendencies;
 		break;
 	    case BOOK_REG:
 		currentWindow = bookReg;
