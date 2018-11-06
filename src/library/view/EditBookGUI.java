@@ -11,17 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import library.Item;
 import library.controller.ScreenController;
 import library.db.ConnectionFactory;
 
@@ -59,7 +50,7 @@ public class EditBookGUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         subjectTf = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        updateButton = new javax.swing.JButton();
+        updateBt = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
         setTitle("Cadastro de livros");
@@ -75,10 +66,10 @@ public class EditBookGUI extends javax.swing.JFrame {
 
         jLabel5.setText("Assunto");
 
-        updateButton.setText("Atualizar");
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
+        updateBt.setText("Atualizar");
+        updateBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateButtonActionPerformed(evt);
+                updateBtActionPerformed(evt);
             }
         });
 
@@ -101,7 +92,7 @@ public class EditBookGUI extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(updateButton)
+                            .addComponent(updateBt)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(authorTf)
                                 .addComponent(titleTf)
@@ -128,7 +119,7 @@ public class EditBookGUI extends javax.swing.JFrame {
                     .addComponent(stockTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(updateButton))
+                .addComponent(updateBt))
         );
 
         backButton.setText("Voltar");
@@ -164,7 +155,7 @@ public class EditBookGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+    private void updateBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtActionPerformed
 	String author = authorTf.getText();
 	String title = titleTf.getText();
 	String subject = subjectTf.getText();
@@ -192,7 +183,7 @@ public class EditBookGUI extends javax.swing.JFrame {
 	    e.printStackTrace();
 	    JOptionPane.showMessageDialog(this, "Problemas de conexão ao banco de dados.");
 	}
-    }//GEN-LAST:event_updateButtonActionPerformed
+    }//GEN-LAST:event_updateBtActionPerformed
 
     public void updateInputValues(int bookId) {
 	this.bookId = bookId;
@@ -268,6 +259,6 @@ public class EditBookGUI extends javax.swing.JFrame {
     private javax.swing.JTextField stockTf;
     private javax.swing.JTextField subjectTf;
     private javax.swing.JTextField titleTf;
-    private javax.swing.JButton updateButton;
+    private javax.swing.JButton updateBt;
     // End of variables declaration//GEN-END:variables
 }

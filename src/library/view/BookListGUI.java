@@ -58,7 +58,7 @@ public class BookListGUI extends javax.swing.JFrame {
         bookList = new javax.swing.JList<>();
         deleteBt = new javax.swing.JToggleButton();
         editBt = new javax.swing.JToggleButton();
-        backButton = new javax.swing.JButton();
+        backBt = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listagem de livros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 24))); // NOI18N
 
@@ -72,11 +72,6 @@ public class BookListGUI extends javax.swing.JFrame {
         buttonGroup1.add(titleRb);
         titleRb.setSelected(true);
         titleRb.setText("Título");
-        titleRb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                titleRbActionPerformed(evt);
-            }
-        });
 
         searchBt.setText("Buscar");
         searchBt.addActionListener(new java.awt.event.ActionListener() {
@@ -148,10 +143,10 @@ public class BookListGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        backButton.setText("Voltar");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
+        backBt.setText("Voltar");
+        backBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
+                backBtActionPerformed(evt);
             }
         });
 
@@ -165,7 +160,7 @@ public class BookListGUI extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(backButton)))
+                        .addComponent(backBt)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -174,16 +169,16 @@ public class BookListGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backButton)
+                .addComponent(backBt)
                 .addGap(10, 10, 10))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+    private void backBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtActionPerformed
 	ScreenController.showScreen(Screens.LIBRARIAN);
-    }//GEN-LAST:event_backButtonActionPerformed
+    }//GEN-LAST:event_backBtActionPerformed
 
     private void deleteBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtActionPerformed
 	deleteBt.setEnabled(false);
@@ -283,10 +278,6 @@ public class BookListGUI extends javax.swing.JFrame {
 	searchBt.setEnabled(true);
     }//GEN-LAST:event_searchBtActionPerformed
 
-    private void titleRbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleRbActionPerformed
-	// TODO add your handling code here:
-    }//GEN-LAST:event_titleRbActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -325,7 +316,7 @@ public class BookListGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton authorRb;
-    private javax.swing.JButton backButton;
+    private javax.swing.JButton backBt;
     private javax.swing.JList<String> bookList;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JToggleButton deleteBt;

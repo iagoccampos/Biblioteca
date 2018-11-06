@@ -69,15 +69,15 @@
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="searchButton" max="32767" attributes="0"/>
-                              <Component id="registrationTF" pref="91" max="32767" attributes="0"/>
+                              <Component id="searchBt" max="32767" attributes="0"/>
+                              <Component id="registrationTf" pref="91" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="264" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="220" max="-2" attributes="0"/>
-                          <Component id="releaseBookjButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="releaseBookBt" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="25" max="32767" attributes="0"/>
@@ -92,29 +92,32 @@
                       <Component id="jScrollPane2" min="-2" pref="317" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="registrationTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="registrationTf" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="searchButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="searchBt" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="releaseBookjButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="releaseBookBt" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="registrationTF">
+        <Component class="javax.swing.JTextField" name="registrationTf">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registrationTfActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="searchButton">
+        <Component class="javax.swing.JButton" name="searchBt">
           <Properties>
             <Property name="text" type="java.lang.String" value="Consultar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchBtActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -124,7 +127,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="jList">
+            <Component class="javax.swing.JList" name="pendencies">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="dlm" type="code"/>
@@ -141,12 +144,12 @@
             <Property name="text" type="java.lang.String" value="Matr&#xed;cula:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="releaseBookjButton">
+        <Component class="javax.swing.JButton" name="releaseBookBt">
           <Properties>
             <Property name="text" type="java.lang.String" value="Devolver Livro Selecionado"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="releaseBookjButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="releaseBookBtActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -6,13 +6,11 @@
 package library.view;
 
 import enums.Screens;
-import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import library.controller.EmployeeLogin;
 import library.controller.ScreenController;
 import library.controller.StudentLogin;
-import library.db.ConnectionFactory;
 
 /**
  *
@@ -25,7 +23,6 @@ public class LoginGUI extends javax.swing.JFrame {
      */
     public LoginGUI() {
 	setResizable(false);
-
 	initComponents();
     }
 

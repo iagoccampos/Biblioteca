@@ -83,7 +83,7 @@
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="updateButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="updateBt" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="authorTf" max="32767" attributes="0"/>
                                   <Component id="titleTf" alignment="0" max="32767" attributes="0"/>
@@ -120,7 +120,7 @@
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="updateButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="updateBt" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -154,12 +154,12 @@
             <Property name="text" type="java.lang.String" value="Assunto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="updateButton">
+        <Component class="javax.swing.JButton" name="updateBt">
           <Properties>
             <Property name="text" type="java.lang.String" value="Atualizar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateBtActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

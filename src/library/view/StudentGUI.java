@@ -32,26 +32,26 @@ public class StudentGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        pedenciesButton = new javax.swing.JToggleButton();
-        listButton = new javax.swing.JButton();
-        logoutButton = new javax.swing.JButton();
+        pedenciesBt = new javax.swing.JToggleButton();
+        listBt = new javax.swing.JButton();
+        logoutBt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gerenciamento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 36))); // NOI18N
         jPanel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
 
-        pedenciesButton.setText("Pendências");
-        pedenciesButton.addActionListener(new java.awt.event.ActionListener() {
+        pedenciesBt.setText("Pendências");
+        pedenciesBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pedenciesButtonActionPerformed(evt);
+                pedenciesBtActionPerformed(evt);
             }
         });
 
-        listButton.setText("Listar livros");
-        listButton.addActionListener(new java.awt.event.ActionListener() {
+        listBt.setText("Listar livros");
+        listBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listButtonActionPerformed(evt);
+                listBtActionPerformed(evt);
             }
         });
 
@@ -61,9 +61,9 @@ public class StudentGUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(listButton, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(listBt, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(pedenciesButton)
+                .addComponent(pedenciesBt)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -71,15 +71,15 @@ public class StudentGUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pedenciesButton)
-                    .addComponent(listButton))
+                    .addComponent(pedenciesBt)
+                    .addComponent(listBt))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        logoutButton.setText("Sair");
-        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+        logoutBt.setText("Sair");
+        logoutBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutButtonActionPerformed(evt);
+                logoutBtActionPerformed(evt);
             }
         });
 
@@ -93,7 +93,7 @@ public class StudentGUI extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(logoutButton)))
+                        .addComponent(logoutBt)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -102,24 +102,24 @@ public class StudentGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(logoutButton)
+                .addComponent(logoutBt)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+    private void logoutBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtActionPerformed
 	ScreenController.showScreen(Screens.LOGIN);
-    }//GEN-LAST:event_logoutButtonActionPerformed
+    }//GEN-LAST:event_logoutBtActionPerformed
 
-    private void pedenciesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedenciesButtonActionPerformed
+    private void pedenciesBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedenciesBtActionPerformed
 	ScreenController.showScreen(Screens.STUDENT_PENDENCIES);
-    }//GEN-LAST:event_pedenciesButtonActionPerformed
+    }//GEN-LAST:event_pedenciesBtActionPerformed
 
-    private void listButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listButtonActionPerformed
+    private void listBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listBtActionPerformed
 	ScreenController.showScreen(Screens.STUDENT_BOOK_LIST);
-    }//GEN-LAST:event_listButtonActionPerformed
+    }//GEN-LAST:event_listBtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,8 +159,8 @@ public class StudentGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton listButton;
-    private javax.swing.JButton logoutButton;
-    private javax.swing.JToggleButton pedenciesButton;
+    private javax.swing.JButton listBt;
+    private javax.swing.JButton logoutBt;
+    private javax.swing.JToggleButton pedenciesBt;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,7 +7,6 @@ package library.view;
 
 import enums.Screens;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -50,7 +49,7 @@ public class StudentPendenciesGUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jList = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
-        backButton = new javax.swing.JButton();
+        backBt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pendências");
@@ -103,10 +102,10 @@ public class StudentPendenciesGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        backButton.setText("Voltar");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
+        backBt.setText("Voltar");
+        backBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
+                backBtActionPerformed(evt);
             }
         });
 
@@ -120,7 +119,7 @@ public class StudentPendenciesGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(backButton)
+                .addComponent(backBt)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,16 +127,16 @@ public class StudentPendenciesGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backButton)
+                .addComponent(backBt)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+    private void backBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtActionPerformed
 	ScreenController.showScreen(Screens.STUDENT);
-    }//GEN-LAST:event_backButtonActionPerformed
+    }//GEN-LAST:event_backBtActionPerformed
 
     private void searchBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtActionPerformed
 	searchBt.setEnabled(false);
@@ -237,7 +236,7 @@ public class StudentPendenciesGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton backButton;
+    private javax.swing.JButton backBt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList;
     private javax.swing.JPanel jPanel1;

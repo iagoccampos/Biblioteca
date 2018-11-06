@@ -50,7 +50,7 @@ public class RentBookGUI extends javax.swing.JFrame {
         booknameTf = new javax.swing.JTextField();
         rentBt = new javax.swing.JButton();
         registrationTf = new javax.swing.JFormattedTextField();
-        backButton = new javax.swing.JButton();
+        backBt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Alugar Livro");
@@ -61,12 +61,6 @@ public class RentBookGUI extends javax.swing.JFrame {
 
         jLabel2.setText("Livro:");
 
-        booknameTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                booknameTfActionPerformed(evt);
-            }
-        });
-
         rentBt.setText("Alugar");
         rentBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,11 +69,6 @@ public class RentBookGUI extends javax.swing.JFrame {
         });
 
         registrationTf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        registrationTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registrationTfActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,10 +105,10 @@ public class RentBookGUI extends javax.swing.JFrame {
                 .addComponent(rentBt))
         );
 
-        backButton.setText("Voltar");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
+        backBt.setText("Voltar");
+        backBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
+                backBtActionPerformed(evt);
             }
         });
 
@@ -133,7 +122,7 @@ public class RentBookGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(backButton)
+                .addComponent(backBt)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -142,16 +131,12 @@ public class RentBookGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backButton)
+                .addComponent(backBt)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void booknameTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_booknameTfActionPerformed
-	// TODO add your handling code here:
-    }//GEN-LAST:event_booknameTfActionPerformed
 
     private void rentBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentBtActionPerformed
 	rentBt.setEnabled(false);
@@ -172,13 +157,9 @@ public class RentBookGUI extends javax.swing.JFrame {
 	rentBt.setEnabled(true);
     }//GEN-LAST:event_rentBtActionPerformed
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+    private void backBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtActionPerformed
 	ScreenController.showScreen(Screens.LIBRARIAN);
-    }//GEN-LAST:event_backButtonActionPerformed
-
-    private void registrationTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationTfActionPerformed
-	// TODO add your handling code here:
-    }//GEN-LAST:event_registrationTfActionPerformed
+    }//GEN-LAST:event_backBtActionPerformed
 
     private boolean checkStudentPendencies(String reg) {
 	try {
@@ -320,7 +301,7 @@ public class RentBookGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton backButton;
+    private javax.swing.JButton backBt;
     private javax.swing.JTextField booknameTf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
