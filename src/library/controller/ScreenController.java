@@ -5,7 +5,7 @@
  */
 package library.controller;
 
-import enums.Screens;
+import library.enums.Screens;
 import javax.swing.JFrame;
 import library.view.RegisterBookGUI;
 import library.view.LibrarianGUI;

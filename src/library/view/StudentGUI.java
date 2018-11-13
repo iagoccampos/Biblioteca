@@ -5,7 +5,7 @@
  */
 package library.view;
 
-import enums.Screens;
+import library.enums.Screens;
 import library.controller.ScreenController;
 
 /**

@@ -5,7 +5,7 @@
  */
 package library.view;
 
-import enums.Screens;
+import library.enums.Screens;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
